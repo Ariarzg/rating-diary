@@ -341,7 +341,15 @@ export default function ExperiencePage({
                 value={editImage}
                 onChange={setEditImage}
                 searchImages={searchImages}
-                searchQuery={experience.creator ? `${experience.name} ${experience.creator}` : experience.name}
+                searchQuery={
+                  experience.category === "game"
+                    ? experience.name
+                    : experience.category === "music"
+                    ? `${experience.name} ${experience.creator || ""}`.trim()
+                    : experience.category === "book"
+                    ? `${experience.name} by ${experience.creator || ""}`.trim()
+                    : experience.name
+                }
                 currentImage={experience.coverImage}
               />
             </div>

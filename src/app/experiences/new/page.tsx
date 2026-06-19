@@ -243,7 +243,15 @@ export default function NewExperiencePage() {
                       value={coverImage}
                       onChange={setCoverImage}
                       searchImages={searchImages}
-                      searchQuery={creator ? `${name} ${creator}` : name || category}
+                      searchQuery={
+                        category === "game"
+                          ? name
+                          : category === "music"
+                          ? `${name} ${creator}`.trim()
+                          : category === "book"
+                          ? `${name} by ${creator}`.trim()
+                          : name
+                      }
                     />
                   </div>
 
