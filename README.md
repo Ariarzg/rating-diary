@@ -20,7 +20,7 @@
 - **Category-Specific Rating Sliders** — 7 unique sliders per category (Music, Game, Movie, Book), each with a clear description
 - **Search Auto-Fill** — Search Steam, Deezer, TMDB, or Google Books to auto-populate experience details
 - **Journal System** — Track how your opinions change over time with revisit entries
-- **Image Picker** — Choose from search results, web images (DuckDuckGo), or upload your own
+- **Image Picker** — Choose from search results, web images (via Cloudflare Worker proxy), or upload your own
 - **Full Edit & Delete** — Modify all experience details or remove them entirely
 
 ### UI/UX
@@ -51,7 +51,7 @@
 | **Animations** | Framer Motion + React Bits |
 | **Package Manager** | Bun |
 | **Authentication** | JWT (jose) + bcryptjs |
-| **Image Search** | DuckDuckGo (no API key) |
+| **Image Search** | DuckDuckGo via Cloudflare Worker (no API key) |
 
 ---
 
@@ -98,6 +98,9 @@ JWT_SECRET="your-super-secret-jwt-key"
 
 # Optional (for movie search)
 TMDB_API_KEY="your-tmdb-api-key"
+
+# Optional (for image search via Cloudflare Worker)
+IMAGE_SEARCH_PROXY_URL="https://your-worker-name.workers.dev"
 ```
 
 ### Run
@@ -119,6 +122,9 @@ Open [http://localhost:3000](http://localhost:3000) to see the app.
 
 ```
 rating-diary/
+├── cloudflare-worker/             # Cloudflare Worker for image search proxy
+│   ├── index.js                   # Worker code
+│   └── README.md                  # Worker setup instructions
 ├── src/
 │   ├── app/
 │   │   ├── api/                    # API routes

@@ -1,5 +1,20 @@
 import { NextResponse } from "next/server";
 
+// Cloudflare Worker URL that proxies DuckDuckGo image search.
+// This bypasses DuckDuckGo's IP blocking on serverless platforms like Vercel.
+// Set IMAGE_SEARCH_PROXY_URL in your .env file.
+const WORKER_URL =
+  process.env.IMAGE_SEARCH_PROXY_URL ||
+  "https://image-search-proxy.ariarzg.workers.dev";
+
+/**
+ * GET /api/search/images/duckduckgo?q=<query>
+ *
+ * Proxies image search requests through a Cloudflare Worker.
+ * The Worker fetches from DuckDuckGo and returns normalized results.
+ *
+ * Returns: { items: { url: string; thumbnail: string; alt: string }[] }
+ */
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -9,50 +24,26 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Query required" }, { status: 400 });
     }
 
-    const headers = {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9",
-    };
+    // Call the Cloudflare Worker with the search query
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
 
-    const tokenRes = await fetch(
-      `https://duckduckgo.com/?q=${encodeURIComponent(query)}&iax=images&ia=images`,
-      { headers }
+    const res = await fetch(
+      `${WORKER_URL}/?q=${encodeURIComponent(query)}`,
+      { signal: controller.signal }
     );
 
-    if (!tokenRes.ok) {
+    clearTimeout(timeout);
+
+    if (!res.ok) {
       return NextResponse.json({ items: [] });
     }
 
-    const tokenText = await tokenRes.text();
-    const vqdMatch = tokenText.match(/vqd=([^&"']+)/);
+    const data = await res.json();
 
-    if (!vqdMatch) {
-      return NextResponse.json({ items: [] });
-    }
-
-    const vqd = vqdMatch[1];
-
-    const imageRes = await fetch(
-      `https://duckduckgo.com/i.js?l=us-en&o=json&q=${encodeURIComponent(query)}&vqd=${vqd}&f=,,,,,&p=1&s=0`,
-      { headers }
-    );
-
-    if (!imageRes.ok) {
-      return NextResponse.json({ items: [] });
-    }
-
-    const imageData = await imageRes.json();
-
-    const items = (imageData.results || []).slice(0, 10).map((img: { image: string; thumbnail: string; title: string }) => ({
-      url: img.image,
-      thumbnail: img.thumbnail,
-      alt: img.title || "",
-    }));
-
-    return NextResponse.json({ items });
+    return NextResponse.json({ items: data.items || [] });
   } catch (error) {
-    console.error("DuckDuckGo search error:", error);
+    console.error("Image search proxy error:", error);
     return NextResponse.json({ items: [] });
   }
 }
