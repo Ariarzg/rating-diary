@@ -14,7 +14,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 bun run dev          # Start dev server (localhost:3000)
 bun run build        # Production build
 bun run lint         # ESLint (flat config)
-bun run db:push      # Push schema to Neon DB (fastest for dev)
+bun run db:push      # Push schema to dev Neon DB (fastest for dev)
+bun run db:push:prod # Push schema to production Neon DB
 bun run db:generate  # Generate Drizzle migrations
 bun run db:migrate   # Apply Drizzle migrations
 bun run db:studio    # Open Drizzle Studio
@@ -76,7 +77,7 @@ No `typecheck` or `test` scripts exist. Run `npx tsc --noEmit` for type checking
 ### Schema Migrations
 Schema changes are managed manually — no automated migrations in the Vercel build.
 - For local dev: use `bun run db:push` (fastest, no migration files)
-- For production: apply changes via `bun run db:push` or Neon console before deploying
+- For production: use `bun run db:push:prod` (pushes schema to production Neon DB)
 
 ### Neon Database Branching
 - **Neon Project:** rating-diary (`soft-firefly-87539645`)
