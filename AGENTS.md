@@ -73,10 +73,10 @@ No `typecheck` or `test` scripts exist. Run `npx tsc --noEmit` for type checking
 3. Test on preview → confirm changes work in isolation
 4. Merge `develop` into `main` → Vercel deploys to production
 
-### Schema Migrations (Automated)
-`vercel.json` build command runs `db:generate && db:migrate` before `next build`. Every deploy (production and preview) auto-applies pending schema changes. No manual migration step needed.
+### Schema Migrations
+Schema changes are managed manually — no automated migrations in the Vercel build.
 - For local dev: use `bun run db:push` (fastest, no migration files)
-- For production-safe flow: `bun run db:generate` + `bun run db:migrate`
+- For production: apply changes via `bun run db:push` or Neon console before deploying
 
 ### Neon Database Branching
 - **Neon Project:** rating-diary (`soft-firefly-87539645`)
