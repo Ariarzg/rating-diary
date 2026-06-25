@@ -17,6 +17,7 @@
 - **Cleaner code, refactoring** — General code quality pass: extract duplicated patterns, simplify complex components, improve type safety.
 - **Missing indexes on foreign key columns** — `experiences.userId`, `ratings.experienceId`, `revisits.experienceId`, `revisitRatings.revisitId`, `images.experienceId` have no indexes. Add via Drizzle `index()`.
 - **`categoryGradients` defined in 3 places** — Identical gradient maps in `experiences/page.tsx`, `[slug]/page.tsx`, and `image-picker.tsx`. Centralize in `src/lib/categories.ts`.
+- **Update CI/CD** — Improve GitHub Actions workflow: add linting step, add type checking, add build verification before deploy.
 
 ## Feature
 

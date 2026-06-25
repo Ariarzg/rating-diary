@@ -7,18 +7,21 @@ This version has breaking changes — APIs, conventions, and file structure may 
 ## Rules
 
 - **NEVER commit or push code without explicit user approval.** Always wait for the user to say so before running `git commit` or `git push`.
+- **When merging `develop` into `main`**, remind the user to run `bun run db:push:prod` to update the production database schema. Production is never auto-updated.
+- **When creating a new Neon branch** (dev, preview, or otherwise), remind the user to update `PREVIEW_DATABASE_URL` in both `.env` and the GitHub repository secret.
 
 ## Commands
 
 ```bash
-bun run dev          # Start dev server (localhost:3000)
-bun run build        # Production build
-bun run lint         # ESLint (flat config)
-bun run db:push      # Push schema to dev Neon DB (fastest for dev)
-bun run db:push:prod # Push schema to production Neon DB
-bun run db:generate  # Generate Drizzle migrations
-bun run db:migrate   # Apply Drizzle migrations
-bun run db:studio    # Open Drizzle Studio
+bun run dev              # Start dev server (localhost:3000)
+bun run build            # Production build
+bun run lint             # ESLint (flat config)
+bun run db:push          # Push schema to dev Neon DB
+bun run db:push:preview  # Push schema to preview Neon DB
+bun run db:push:prod     # Push schema to production Neon DB
+bun run db:generate      # Generate Drizzle migrations
+bun run db:migrate       # Apply Drizzle migrations
+bun run db:studio        # Open Drizzle Studio
 ```
 
 No `typecheck` or `test` scripts exist. Run `npx tsc --noEmit` for type checking. No test suite is configured.
@@ -76,8 +79,9 @@ No `typecheck` or `test` scripts exist. Run `npx tsc --noEmit` for type checking
 
 ### Schema Migrations
 Schema changes are managed manually — no automated migrations in the Vercel build.
-- For local dev: use `bun run db:push` (fastest, no migration files)
-- For production: use `bun run db:push:prod` (pushes schema to production Neon DB)
+- For local dev: use `bun run db:push` (updates `dev` branch)
+- For preview: use `bun run db:push:preview` (updates `preview/develop` branch)
+- For production: use `bun run db:push:prod` (updates `production` branch — manual only, never auto-updated)
 
 ### Neon Database Branching
 - **Neon Project:** rating-diary (`soft-firefly-87539645`)

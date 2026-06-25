@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "db:push": "drizzle-kit push",
-    "db:push:prod": "bun run --env-file=.env scripts/db-push-prod.ts",
+    "db:push:prod": "bun run --env-file=.env scripts/db-push-prod.ts prod",
+    "db:push:preview": "bun run --env-file=.env scripts/db-push-prod.ts preview",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
