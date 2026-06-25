@@ -168,13 +168,14 @@ export default function NewExperiencePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4">
-                    {Object.entries(categoryLabels).map(([key, label]) => {
+                    {Object.entries(categoryLabels).map(([key, label], index) => {
                       const IconComponent = categoryIcons[key] || categoryIcons.music;
+                      const isLast = index === Object.keys(categoryLabels).length - 1;
                       return (
                         <button
                           key={key}
                           onClick={() => handleCategorySelect(key)}
-                          className="p-6 rounded-xl bg-muted border border-border hover:border-primary/30 transition-all duration-300 hover:bg-accent text-center group"
+                          className={`p-6 rounded-xl bg-muted border border-border hover:border-primary/30 transition-all duration-300 hover:bg-accent text-center group${isLast ? " col-span-2 justify-self-center w-1/2" : ""}`}
                         >
                           <IconComponent className="w-10 h-10 mx-auto mb-3 text-muted-foreground group-hover:text-primary transition-colors" />
                           <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
@@ -216,6 +217,8 @@ export default function NewExperiencePage() {
                         ? "Game Title"
                         : category === "movie"
                         ? "Movie Title"
+                        : category === "series"
+                        ? "Series Title"
                         : "Book Title"}
                     </Label>
                     <SearchableSelect
@@ -230,6 +233,8 @@ export default function NewExperiencePage() {
                           ? "The Witcher 3"
                           : category === "movie"
                           ? "Inception"
+                          : category === "series"
+                          ? "Breaking Bad"
                           : "Dune"
                       }`}
                     />
@@ -268,6 +273,8 @@ export default function NewExperiencePage() {
                           ? "e.g., CD Projekt Red"
                           : category === "movie"
                           ? "e.g., Christopher Nolan"
+                          : category === "series"
+                          ? "e.g., Vince Gilligan"
                           : "e.g., Frank Herbert"
                       }
                       value={creator}

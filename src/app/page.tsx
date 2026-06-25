@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { MusicIcon, GameIcon, MovieIcon, BookIcon } from "@/lib/icons";
+import { MusicIcon, GameIcon, MovieIcon, BookIcon, SeriesIcon } from "@/lib/icons";
 import { Squares } from "@/components/animations/squares";
 import GradientText from "@/components/GradientText";
 import { Particles } from "@/components/animations/particles";
@@ -13,6 +13,7 @@ const categories = [
   { name: "Music", Icon: MusicIcon, href: "/auth/signup", gradient: "from-purple-500 to-pink-500" },
   { name: "Games", Icon: GameIcon, href: "/auth/signup", gradient: "from-blue-500 to-cyan-500" },
   { name: "Movies", Icon: MovieIcon, href: "/auth/signup", gradient: "from-yellow-500 to-orange-500" },
+  { name: "Series", Icon: SeriesIcon, href: "/auth/signup", gradient: "from-violet-500 to-indigo-500" },
   { name: "Books", Icon: BookIcon, href: "/auth/signup", gradient: "from-emerald-500 to-teal-500" },
 ];
 
@@ -51,22 +52,18 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          Rate and journal your experiences across music, games, movies, and
-          books
+          Rate and journal your experiences across music, games, movies,
+          series, and books
         </motion.p>
 
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-        >
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category, index) => (
             <motion.div
               key={category.name}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+              className="w-[calc(50%-0.5rem)] md:w-56"
             >
               <GlowCard>
                 <div className="p-6 text-center">
@@ -80,7 +77,7 @@ export default function Home() {
               </GlowCard>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -106,15 +103,6 @@ export default function Home() {
           </Link>
         </motion.div>
       </div>
-
-      <motion.footer
-        className="absolute bottom-6 left-0 right-0 text-center text-muted-foreground text-sm"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 1.5 }}
-      >
-        <p>Built with Next.js, Drizzle, and Neon</p>
-      </motion.footer>
     </div>
   );
 }

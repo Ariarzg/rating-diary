@@ -24,6 +24,7 @@ const categoryGradients: Record<string, string> = {
   game: "from-blue-600 via-cyan-500 to-green-500",
   movie: "from-yellow-500 via-orange-500 to-red-600",
   book: "from-emerald-600 via-teal-500 to-cyan-500",
+  series: "from-violet-600 via-indigo-500 to-blue-500",
 };
 
 export default function ExperiencesPage() {

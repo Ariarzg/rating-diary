@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
-import { experiences, ratings, revisits, revisitRatings } from "@/db/schema";
+import { experiences, ratings, revisits } from "@/db/schema";
 import { getSession } from "@/lib/auth";
 import { eq, and, desc } from "drizzle-orm";
 import { unlink } from "fs/promises";
@@ -39,24 +39,13 @@ export async function GET(
     const experienceRevisits = await db.query.revisits.findMany({
       where: eq(revisits.experienceId, experience.id),
       orderBy: [desc(revisits.createdAt)],
+      with: { ratings: true },
     });
-
-    const revisitsWithRatings = await Promise.all(
-      experienceRevisits.map(async (revisit) => {
-        const revisitRatingsList = await db.query.revisitRatings.findMany({
-          where: eq(revisitRatings.revisitId, revisit.id),
-        });
-        return {
-          ...revisit,
-          ratings: revisitRatingsList,
-        };
-      })
-    );
 
     return NextResponse.json({
       experience,
       ratings: experienceRatings,
-      revisits: revisitsWithRatings,
+      revisits: experienceRevisits,
     });
   } catch (error) {
     console.error("Fetch experience error:", error);

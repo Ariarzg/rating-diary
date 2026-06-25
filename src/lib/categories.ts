@@ -165,6 +165,43 @@ export const categorySliders: CategorySliders = {
       description: "How well the story flows and maintains momentum",
     },
   ],
+  series: [
+    {
+      key: "acting",
+      label: "Acting",
+      description: "Performances, emotional range, and believability",
+    },
+    {
+      key: "story",
+      label: "Story",
+      description: "Narrative depth, plot twists, and storytelling quality",
+    },
+    {
+      key: "pacing",
+      label: "Pacing",
+      description: "How well episodes flow and maintain momentum",
+    },
+    {
+      key: "cinematography",
+      label: "Cinematography",
+      description: "Camera work, lighting, and visual composition",
+    },
+    {
+      key: "rewatchability",
+      label: "Rewatchability",
+      description: "How much you enjoy watching it again",
+    },
+    {
+      key: "character_development",
+      label: "Character Development",
+      description: "How characters grow and evolve across episodes",
+    },
+    {
+      key: "world_building",
+      label: "World-building",
+      description: "Setting richness, lore, and immersive detail",
+    },
+  ],
 };
 
 export const categoryLabels: { [key: string]: string } = {
@@ -172,6 +209,7 @@ export const categoryLabels: { [key: string]: string } = {
   game: "Game",
   movie: "Movie",
   book: "Book",
+  series: "Series",
 };
 
 export const categoryCreatorLabels: { [key: string]: string } = {
@@ -179,6 +217,7 @@ export const categoryCreatorLabels: { [key: string]: string } = {
   game: "Developer",
   movie: "Director",
   book: "Author",
+  series: "Showrunner / Network",
 };
 
 export const categoryCreatorPlaceholders: { [key: string]: string } = {
@@ -186,6 +225,7 @@ export const categoryCreatorPlaceholders: { [key: string]: string } = {
   game: "e.g., CD Projekt Red, Naughty Dog, Nintendo",
   movie: "e.g., Christopher Nolan, Denis Villeneuve",
   book: "e.g., Frank Herbert, Brandon Sanderson",
+  series: "e.g., Vince Gilligan, Netflix",
 };
 
 export const categoryExtraFields: {
@@ -208,5 +248,10 @@ export const categoryExtraFields: {
   book: [
     { key: "year", label: "Year", placeholder: "e.g., 1965" },
     { key: "genre", label: "Genre", placeholder: "e.g., Sci-Fi, Fantasy, Mystery" },
+  ],
+  series: [
+    { key: "year", label: "Year", placeholder: "e.g., 2023" },
+    { key: "genre", label: "Genre", placeholder: "e.g., Sci-Fi, Drama, Thriller" },
+    { key: "network", label: "Network", placeholder: "e.g., Netflix, HBO, AMC" },
   ],
 };

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { MusicIcon, GameIcon, MovieIcon, BookIcon } from "@/lib/icons";
+import { MusicIcon, GameIcon, MovieIcon, BookIcon, SeriesIcon } from "@/lib/icons";
 
 type ImagePickerProps = {
   category: string;
@@ -20,6 +20,7 @@ const categoryGradients: Record<string, string> = {
   game: "bg-gradient-to-br from-blue-600 via-cyan-500 to-green-500",
   movie: "bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600",
   book: "bg-gradient-to-br from-emerald-600 via-teal-500 to-cyan-500",
+  series: "bg-gradient-to-br from-violet-600 via-indigo-500 to-blue-500",
 };
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -27,6 +28,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   game: GameIcon,
   movie: MovieIcon,
   book: BookIcon,
+  series: SeriesIcon,
 };
 
 type ImageSource = "gradient" | "current" | "search" | "web" | "upload";

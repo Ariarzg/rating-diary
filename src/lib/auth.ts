@@ -2,7 +2,9 @@ import { compare, hash } from "bcryptjs";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET!);
+const secret = process.env.JWT_SECRET;
+if (!secret) throw new Error("JWT_SECRET environment variable is required");
+const JWT_SECRET = new TextEncoder().encode(secret);
 
 export async function hashPassword(password: string): Promise<string> {
   return hash(password, 12);
@@ -54,5 +56,5 @@ export async function setSession(userId: string): Promise<void> {
 
 export async function clearSession(): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.delete("session");
+  cookieStore.set("session", "", { path: "/", maxAge: 0 });
 }

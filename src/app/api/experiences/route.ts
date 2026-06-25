@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const validCategories = ["music", "game", "movie", "book"];
+    const validCategories = ["music", "game", "movie", "book", "series"];
     if (!validCategories.includes(category)) {
       return NextResponse.json(
         { error: "Invalid category" },

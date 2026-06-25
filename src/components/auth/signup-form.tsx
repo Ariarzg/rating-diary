@@ -13,7 +13,10 @@ import { GradientText } from "@/components/animations/glow";
 export function SignUpForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/experiences";
+  const rawRedirect = searchParams.get("redirect") || "/experiences";
+  const redirect = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//")
+    ? rawRedirect
+    : "/experiences";
 
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");

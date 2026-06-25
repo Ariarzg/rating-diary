@@ -43,6 +43,18 @@ export function BookIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
+export function SeriesIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2" />
+      <path d="M8 21h8" />
+      <path d="M12 17v4" />
+      <path d="M7 8h2" />
+      <path d="M7 11h4" />
+    </svg>
+  );
+}
+
 export function StarIcon({ filled = false, className = "w-4 h-4" }: { filled?: boolean; className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -56,6 +68,7 @@ export const categoryIcons: Record<string, React.ComponentType<{ className?: str
   game: GameIcon,
   movie: MovieIcon,
   book: BookIcon,
+  series: SeriesIcon,
 };
 
 export function RatingStars({ value, max = 5, size = "sm" }: { value: number; max?: number; size?: "sm" | "md" | "lg" }) {

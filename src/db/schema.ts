@@ -16,6 +16,7 @@ export const categoryEnum = pgEnum("category", [
   "game",
   "movie",
   "book",
+  "series",
 ]);
 
 export const users = pgTable("users", {

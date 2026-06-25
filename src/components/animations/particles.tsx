@@ -8,9 +8,11 @@ type ParticlesProps = {
   className?: string;
 };
 
+const DEFAULT_COLORS = ["#f59e0b", "#f97316", "#ef4444", "#a855f7"];
+
 export function Particles({
   count = 50,
-  colors = ["#f59e0b", "#f97316", "#ef4444", "#a855f7"],
+  colors = DEFAULT_COLORS,
   className = "",
 }: ParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);

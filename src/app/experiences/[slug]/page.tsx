@@ -48,7 +48,21 @@ const categoryGradients: Record<string, string> = {
   game: "from-blue-600 via-cyan-500 to-green-500",
   movie: "from-yellow-500 via-orange-500 to-red-600",
   book: "from-emerald-600 via-teal-500 to-cyan-500",
+  series: "from-violet-600 via-indigo-500 to-blue-500",
 };
+
+const creatorKeys: Record<string, string> = {
+  game: "developer",
+  movie: "director",
+  music: "artist",
+  book: "author",
+  series: "network",
+};
+
+function filterMetadata(metadata: Record<string, string>, category: string) {
+  const skip = creatorKeys[category];
+  return Object.entries(metadata).filter(([key]) => key !== skip);
+}
 
 type Rating = {
   id: string;
@@ -110,7 +124,7 @@ export default function ExperiencePage({
         setRevisits(data.revisits);
 
         const initialRatings: Record<string, number> = {};
-        ratings.forEach((rating) => {
+        data.ratings.forEach((rating: { sliderKey: string; value: number }) => {
           initialRatings[rating.sliderKey] = rating.value;
         });
         setRevisitRatings(initialRatings);
@@ -446,22 +460,9 @@ export default function ExperiencePage({
                   className="h-10"
                 />
               </div>
-              {Object.keys(editMetadata).filter((key) => {
-                if (experience.category === "game" && key === "developer") return false;
-                if (experience.category === "movie" && key === "director") return false;
-                if (experience.category === "music" && key === "artist") return false;
-                if (experience.category === "book" && key === "author") return false;
-                return true;
-              }).length > 0 && (
+              {Object.keys(filterMetadata(editMetadata, experience.category)).length > 0 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {Object.entries(editMetadata)
-                    .filter(([key]) => {
-                      if (experience.category === "game" && key === "developer") return false;
-                      if (experience.category === "movie" && key === "director") return false;
-                      if (experience.category === "music" && key === "artist") return false;
-                      if (experience.category === "book" && key === "author") return false;
-                      return true;
-                    })
+                  {filterMetadata(editMetadata, experience.category)
                     .map(([key]) => (
                     <div key={key} className="space-y-1">
                       <label className="text-sm text-muted-foreground">
@@ -486,22 +487,9 @@ export default function ExperiencePage({
                   {categoryCreatorLabels[experience.category]}: {experience.creator}
                 </p>
               )}
-              {experience.metadata && Object.entries(experience.metadata).filter(([key]) => {
-                if (experience.category === "game" && key === "developer") return false;
-                if (experience.category === "movie" && key === "director") return false;
-                if (experience.category === "music" && key === "artist") return false;
-                if (experience.category === "book" && key === "author") return false;
-                return true;
-              }).length > 0 && (
+              {experience.metadata && filterMetadata(experience.metadata, experience.category).length > 0 && (
                 <div className="flex flex-wrap gap-3 mb-3">
-                  {Object.entries(experience.metadata)
-                    .filter(([key]) => {
-                      if (experience.category === "game" && key === "developer") return false;
-                      if (experience.category === "movie" && key === "director") return false;
-                      if (experience.category === "music" && key === "artist") return false;
-                      if (experience.category === "book" && key === "author") return false;
-                      return true;
-                    })
+                  {filterMetadata(experience.metadata, experience.category)
                     .map(([key, value]) =>
                     value ? (
                       <span

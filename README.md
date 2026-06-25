@@ -2,7 +2,7 @@
 
 # Rating Diary
 
-### Rate and journal your experiences across music, games, movies, and books
+### Rate and journal your experiences across music, games, movies, series, and books
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)](https://typescriptlang.org)
@@ -17,8 +17,8 @@
 ## Features
 
 ### Core
-- **Category-Specific Rating Sliders** — 7 unique sliders per category (Music, Game, Movie, Book), each with a clear description
-- **Search Auto-Fill** — Search Steam, Deezer, TMDB, or Google Books to auto-populate experience details
+- **Category-Specific Rating Sliders** — 7 unique sliders per category (Music, Game, Movie, Series, Book), each with a clear description
+- **Search Auto-Fill** — Search Steam, Deezer, TMDB (movies & TV series), or Google Books to auto-populate experience details
 - **Journal System** — Track how your opinions change over time with revisit entries
 - **Image Picker** — Choose from search results, web images (via Cloudflare Worker proxy), or upload your own
 - **Full Edit & Delete** — Modify all experience details or remove them entirely
@@ -35,6 +35,7 @@
 - **Server & Client Components** — Properly separated for optimal performance
 - **Session-Based Auth** — Secure JWT authentication with httpOnly cookies
 - **Route Protection** — Middleware-based proxy for authenticated routes
+- **Automated Schema Migrations** — Vercel build applies pending DB migrations on every deploy
 
 ---
 
@@ -61,7 +62,7 @@
 
 - [Bun](https://bun.sh) installed
 - A [Neon](https://neon.tech) PostgreSQL database
-- (Optional) A [TMDB API key](https://www.themoviedb.org/settings/api) for movie search
+- (Optional) A [TMDB API key](https://www.themoviedb.org/settings/api) for movie & series search
 
 ### Installation
 
@@ -81,10 +82,10 @@ cp .env.example .env
 ### Database Setup
 
 ```bash
-# Push schema to database
+# Push schema to database (fastest for dev)
 bun run db:push
 
-# Or generate migrations first
+# Or generate migrations first (production-safe)
 bun run db:generate
 bun run db:migrate
 ```
@@ -96,7 +97,7 @@ bun run db:migrate
 DATABASE_URL="postgresql://user:password@ep-xxx.neon.tech/neondb?sslmode=require"
 JWT_SECRET="your-super-secret-jwt-key"
 
-# Optional (for movie search)
+# Optional (for movie & series search)
 TMDB_API_KEY="your-tmdb-api-key"
 
 # Optional (for image search via Cloudflare Worker)
@@ -168,6 +169,7 @@ rating-diary/
 | `GET` | `/api/search/game` | Search Steam games |
 | `GET` | `/api/search/music` | Search Deezer music |
 | `GET` | `/api/search/movie` | Search TMDB movies |
+| `GET` | `/api/search/series` | Search TMDB TV series |
 | `GET` | `/api/search/book` | Search Google Books |
 | `GET` | `/api/search/images/duckduckgo` | Search web images |
 | `POST` | `/api/upload` | Upload image file |
@@ -211,6 +213,17 @@ Each category has 7 unique rating dimensions:
 | Dialogue | Writing quality, wit, and natural conversation flow |
 | Direction | Overall vision, scene composition, and creative choices |
 
+### Series
+| Slider | Description |
+|--------|-------------|
+| Acting | Performances, emotional range, and believability |
+| Story | Narrative depth, plot twists, and storytelling quality |
+| Pacing | How well episodes flow and maintain momentum |
+| Cinematography | Camera work, lighting, and visual composition |
+| Rewatchability | How much you enjoy watching it again |
+| Character Development | How characters grow and evolve across episodes |
+| World-building | Setting richness, lore, and immersive detail |
+
 ### Book
 | Slider | Description |
 |--------|-------------|
@@ -227,11 +240,3 @@ Each category has 7 unique rating dimensions:
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-<div align="center">
-
-Built with Next.js, Drizzle, and Neon
-
-</div>
