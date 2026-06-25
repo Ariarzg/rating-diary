@@ -13,6 +13,14 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith(route)
   );
   const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
+  const isHome = pathname === "/";
+
+  if (isHome && token) {
+    const payload = await verifyToken(token);
+    if (payload) {
+      return NextResponse.redirect(new URL("/experiences", request.url));
+    }
+  }
 
   if (isProtectedRoute) {
     if (!token) {
@@ -40,5 +48,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/experiences/:path*", "/auth/:path*"],
+  matcher: ["/", "/experiences/:path*", "/auth/:path*"],
 };
