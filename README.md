@@ -4,6 +4,7 @@
 
 ### Rate and journal your experiences across music, games, movies, series, and books
 
+![Version](https://img.shields.io/badge/version-1.2-blue)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)](https://typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.3-38bdf8?logo=tailwindcss)](https://tailwindcss.com)
@@ -34,8 +35,8 @@
 - **Full-Stack TypeScript** — End-to-end type safety
 - **Server & Client Components** — Properly separated for optimal performance
 - **Session-Based Auth** — Secure JWT authentication with httpOnly cookies
-- **Route Protection** — Middleware-based proxy for authenticated routes
-- **Automated Schema Migrations** — Vercel build applies pending DB migrations on every deploy
+- **Route Protection** — Server-side checks for authenticated routes
+- **Database Branching** — Neon dev/preview/production branches for safe development
 
 ---
 
@@ -82,12 +83,11 @@ cp .env.example .env
 ### Database Setup
 
 ```bash
-# Push schema to database (fastest for dev)
+# Push schema to dev database
 bun run db:push
 
-# Or generate migrations first (production-safe)
-bun run db:generate
-bun run db:migrate
+# Push schema to production (when ready to deploy)
+bun run db:push:prod
 ```
 
 ### Environment Variables
@@ -234,6 +234,17 @@ Each category has 7 unique rating dimensions:
 | Re-readability | How much you gain from reading it again |
 | Themes | Depth of ideas, messages, and intellectual stimulation |
 | Pacing | How well the story flows and maintains momentum |
+
+---
+
+## Changelog
+
+### v1.2
+- **New:** Series category with TMDB TV search integration
+- **Fixed:** Stale closure in experience detail, open redirect vulnerability, JWT validation
+- **Fixed:** Node.js process explosion on `bun run dev`
+- **Improved:** Mobile category filter layout, back button navigation, centralized gradients
+- **DevOps:** GitHub Actions for preview schema sync, separate dev/preview/production database workflows
 
 ---
 
