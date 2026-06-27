@@ -26,6 +26,7 @@ import {
   categorySliders,
   categoryLabels,
   categoryCreatorLabels,
+  categoryGradients,
   SliderDefinition,
 } from "@/lib/categories";
 import { categoryIcons, RatingStars, StarIcon } from "@/lib/icons";
@@ -41,14 +42,6 @@ type Experience = {
   metadata: Record<string, string>;
   averageScore: number;
   createdAt: string;
-};
-
-const categoryGradients: Record<string, string> = {
-  music: "from-purple-600 via-pink-500 to-red-500",
-  game: "from-blue-600 via-cyan-500 to-green-500",
-  movie: "from-yellow-500 via-orange-500 to-red-600",
-  book: "from-emerald-600 via-teal-500 to-cyan-500",
-  series: "from-violet-600 via-indigo-500 to-blue-500",
 };
 
 const creatorKeys: Record<string, string> = {

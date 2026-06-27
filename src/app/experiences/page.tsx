@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { categoryLabels, categoryCreatorLabels } from "@/lib/categories";
+import { categoryLabels, categoryCreatorLabels, categoryGradients } from "@/lib/categories";
 import { categoryIcons, RatingStars } from "@/lib/icons";
 
 type Experience = {
@@ -17,14 +17,6 @@ type Experience = {
   coverImage: string | null;
   averageScore: number;
   createdAt: string;
-};
-
-const categoryGradients: Record<string, string> = {
-  music: "from-purple-600 via-pink-500 to-red-500",
-  game: "from-blue-600 via-cyan-500 to-green-500",
-  movie: "from-yellow-500 via-orange-500 to-red-600",
-  book: "from-emerald-600 via-teal-500 to-cyan-500",
-  series: "from-violet-600 via-indigo-500 to-blue-500",
 };
 
 export default function ExperiencesPage() {
@@ -124,7 +116,7 @@ export default function ExperiencesPage() {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setCategoryFilter("all")}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 ${
               categoryFilter === "all"
                 ? "bg-primary text-primary-foreground shadow-sm"
                 : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground"
@@ -136,7 +128,7 @@ export default function ExperiencesPage() {
             <button
               key={key}
               onClick={() => setCategoryFilter(key)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 ${
                 categoryFilter === key
                   ? "bg-primary text-primary-foreground shadow-sm"
                   : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground"

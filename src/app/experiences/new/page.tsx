@@ -153,6 +153,20 @@ export default function NewExperiencePage() {
           </motion.div>
         )}
 
+        <div className="mb-4">
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (step === "details") setStep("category");
+              else if (step === "ratings") setStep("details");
+              else router.push("/experiences");
+            }}
+            className={btnOutlineClass}
+          >
+            Back
+          </Button>
+        </div>
+
         <AnimatePresence mode="wait">
           {step === "category" && (
             <motion.div
@@ -317,9 +331,6 @@ export default function NewExperiencePage() {
                   </div>
 
                   <div className="flex gap-3 pt-4">
-                    <Button variant="outline" onClick={() => setStep("category")} className={btnOutlineClass}>
-                      Back
-                    </Button>
                     <Button
                       onClick={() => {
                         if (!name.trim()) {
@@ -380,9 +391,6 @@ export default function NewExperiencePage() {
                     </div>
                   ))}
                   <div className="flex gap-3 pt-4">
-                    <Button variant="outline" onClick={() => setStep("details")} className={btnOutlineClass}>
-                      Back
-                    </Button>
                     <Button onClick={handleSubmit} disabled={loading} className={`flex-1 ${btnPrimaryClass}`}>
                       {loading ? "Creating..." : "Create Experience"}
                     </Button>

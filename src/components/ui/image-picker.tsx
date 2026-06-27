@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { categoryGradients } from "@/lib/categories";
 import { MusicIcon, GameIcon, MovieIcon, BookIcon, SeriesIcon } from "@/lib/icons";
 
 type ImagePickerProps = {
@@ -13,14 +14,6 @@ type ImagePickerProps = {
   searchQuery?: string;
   currentImage?: string | null;
   className?: string;
-};
-
-const categoryGradients: Record<string, string> = {
-  music: "bg-gradient-to-br from-purple-600 via-pink-500 to-red-500",
-  game: "bg-gradient-to-br from-blue-600 via-cyan-500 to-green-500",
-  movie: "bg-gradient-to-br from-yellow-500 via-orange-500 to-red-600",
-  book: "bg-gradient-to-br from-emerald-600 via-teal-500 to-cyan-500",
-  series: "bg-gradient-to-br from-violet-600 via-indigo-500 to-blue-500",
 };
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -195,7 +188,7 @@ export function ImagePicker({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className={cn(
-              "w-full aspect-[4/3] rounded-xl flex items-center justify-center",
+              "w-full aspect-[4/3] rounded-xl flex items-center justify-center bg-gradient-to-br",
               categoryGradients[category] || categoryGradients.music
             )}
           >
