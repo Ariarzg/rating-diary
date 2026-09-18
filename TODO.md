@@ -21,6 +21,12 @@
 - **Missing indexes on foreign key columns** — `experiences.userId`, `ratings.experienceId`, `revisits.experienceId`, `revisitRatings.revisitId`, `images.experienceId` have no indexes. Add via Drizzle `index()`.
 - **`categoryGradients` defined in 3 places** — Identical gradient maps in `experiences/page.tsx`, `[slug]/page.tsx`, and `image-picker.tsx`. Centralize in `src/lib/categories.ts`.
 - **Update CI/CD** — Improve GitHub Actions workflow: add linting step, add type checking, add build verification before deploy.
+- **Use database transactions for multi-step mutations** — Experience creation, edits, deletes, and revisits touch multiple related tables. Wrap logically atomic operations in Drizzle transactions so partial failures cannot leave inconsistent records, ratings, revisit entries, or derived `averageScore` values.
+- **Move initial experience data fetching to the server** — The `/experiences` page currently uses a Client Component with `useEffect` → `fetch("/api/experiences")` for its initial dataset. Fetch the authenticated user's experiences in a Server Component and pass the data to smaller Client Components only where interactivity is required.
+- **Add server-side pagination and filtering for experiences** — The current page fetches all experiences and sorts/filters them in the browser. Add query parameters for category, sort, page, and limit, and perform filtering, sorting, and pagination in PostgreSQL before returning results.
+- **Introduce shared request/domain validation** — API routes currently perform ad-hoc validation. Add Zod schemas for auth, experiences, ratings, revisits, and search parameters, and keep validation at the API boundary with reusable domain types.
+- **Extract experience mutations into a service layer** — Route handlers currently contain database and business logic. Move experience/rating/revisit operations into reusable server-side functions so route handlers stay thin and transactions, authorization, validation, and derived-score updates are centralized.
+- **Standardize API error handling** — Establish consistent typed error responses and status codes across API routes, while keeping detailed database/external-service errors in server logs only. This should also give the client predictable error states.
 
 ## Feature
 
